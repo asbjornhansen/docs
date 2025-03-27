@@ -1,217 +1,1982 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
-    "license": {
-      "name": "MIT"
+    "openapi": "3.1.0",
+    "info": {
+        "title": "8888",
+        "version": "0.0.1"
     },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "http://sandbox.mintlify.com"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": []
-    }
-  ],
-  "paths": {
-    "/plants": {
-      "get": {
-        "description": "Returns all plants from the system that the user has access to",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Plant"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
+    "servers": [
+        {
+            "url": "https:\/\/8888.test\/api\/v1"
         }
-      },
-      "post": {
-        "description": "Creates a new plant in the store",
-        "requestBody": {
-          "description": "Plant to add to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
+    ],
+    "paths": {
+        "\/orders": {
+            "get": {
+                "operationId": "orders.index",
+                "tags": [
+                    "ApiOrder"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": 50
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`OrderCollection`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/OrderCollection"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "orders.store",
+                "tags": [
+                    "ApiOrder"
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
             }
-          },
-          "required": true
+        },
+        "\/orders\/{order}": {
+            "get": {
+                "operationId": "orders.show",
+                "tags": [
+                    "ApiOrder"
+                ],
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "path",
+                        "required": true,
+                        "description": "The order UUID",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`OrderResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/OrderResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "orders.update",
+                "tags": [
+                    "ApiOrder"
+                ],
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "orders.destroy",
+                "tags": [
+                    "ApiOrder"
+                ],
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/orders\/{order}\/fulfill": {
+            "post": {
+                "operationId": "apiOrder.fulfill",
+                "tags": [
+                    "ApiOrder"
+                ],
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`OrderResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/OrderResource"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/orders\/{order}\/refund": {
+            "post": {
+                "operationId": "apiOrder.refund",
+                "tags": [
+                    "ApiOrder"
+                ],
+                "parameters": [
+                    {
+                        "name": "order",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`OrderResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/OrderResource"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    }
+                }
+            }
+        },
+        "\/products": {
+            "get": {
+                "operationId": "products.index",
+                "tags": [
+                    "ApiProduct"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": 50
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`ProductCollection`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ProductCollection"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "products.store",
+                "tags": [
+                    "ApiProduct"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/ProductStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/products\/{product}": {
+            "get": {
+                "operationId": "products.show",
+                "tags": [
+                    "ApiProduct"
+                ],
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "description": "The product sqid",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`ProductResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/ProductResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "products.update",
+                "tags": [
+                    "ApiProduct"
+                ],
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "description": "The product sqid",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/ProductUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "products.destroy",
+                "tags": [
+                    "ApiProduct"
+                ],
+                "parameters": [
+                    {
+                        "name": "product",
+                        "in": "path",
+                        "required": true,
+                        "description": "The product sqid",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "uuid",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sqid",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "brand_id",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "lowest_price_excluding_vat",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "tax_rate",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "requires_shipping",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "is_tracking_stock",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "allow_backorder",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "is_buyable",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "uses_variants",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "lowest_compare_at_price_excluding_vat",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "google_product_category_name",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "google_product_category_id",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "integer",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "google_product_adult",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "google_product_condition",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "average_rating",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "number",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "frontend_path",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "in_stock",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "menuable_title",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "slug",
+                        "in": "query",
+                        "schema": {
+                            "type": [
+                                "string",
+                                "null"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "inStock",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "name": "price_excluding_vat",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "registerMediaConversionsUsingModelInstance",
+                        "in": "query",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": ""
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/variants": {
+            "get": {
+                "operationId": "variants.index",
+                "tags": [
+                    "ApiVariant"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": 50
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`VariantCollection`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/VariantCollection"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "variants.store",
+                "tags": [
+                    "ApiVariant"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/VariantStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "`VariantResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/VariantResource"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/variants\/{variant}": {
+            "get": {
+                "operationId": "variants.show",
+                "tags": [
+                    "ApiVariant"
+                ],
+                "parameters": [
+                    {
+                        "name": "variant",
+                        "in": "path",
+                        "required": true,
+                        "description": "The variant ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`VariantResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/VariantResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "variants.update",
+                "tags": [
+                    "ApiVariant"
+                ],
+                "parameters": [
+                    {
+                        "name": "variant",
+                        "in": "path",
+                        "required": true,
+                        "description": "The variant ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/VariantUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "`VariantResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/VariantResource"
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "variants.destroy",
+                "tags": [
+                    "ApiVariant"
+                ],
+                "parameters": [
+                    {
+                        "name": "variant",
+                        "in": "path",
+                        "required": true,
+                        "description": "The variant ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "501": {
+                        "description": "An error",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "description": "Error overview.",
+                                            "example": ""
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/webhooks": {
+            "get": {
+                "operationId": "webhooks.index",
+                "tags": [
+                    "ApiWebhook"
+                ],
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "default": 50
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`WebhookCollection`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/WebhookCollection"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "webhooks.store",
+                "tags": [
+                    "ApiWebhook"
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/WebhookStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "`WebhookResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/WebhookResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        },
+        "\/webhooks\/{webhook}": {
+            "get": {
+                "operationId": "webhooks.show",
+                "tags": [
+                    "ApiWebhook"
+                ],
+                "parameters": [
+                    {
+                        "name": "webhook",
+                        "in": "path",
+                        "required": true,
+                        "description": "The webhook ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`WebhookResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/WebhookResource"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "put": {
+                "operationId": "webhooks.update",
+                "description": "\u26a0\ufe0f Cannot generate request documentation: Array to string conversion",
+                "tags": [
+                    "ApiWebhook"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`WebhookResource`",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/WebhookResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "422": {
+                        "$ref": "#\/components\/responses\/ValidationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "webhooks.destroy",
+                "tags": [
+                    "ApiWebhook"
+                ],
+                "parameters": [
+                    {
+                        "name": "webhook",
+                        "in": "path",
+                        "required": true,
+                        "description": "The webhook ID",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#\/components\/responses\/ModelNotFoundException"
+                    },
+                    "401": {
+                        "$ref": "#\/components\/responses\/AuthenticationException"
+                    },
+                    "403": {
+                        "$ref": "#\/components\/responses\/AuthorizationException"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "OrderCollection": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/OrderResource"
+                        }
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "title": "OrderCollection"
+            },
+            "OrderResource": {
+                "type": "object",
+                "properties": {
+                    "order_id": {
+                        "type": "string"
+                    },
+                    "currency": {
+                        "type": "string",
+                        "example": "nok"
+                    },
+                    "fulfillments": {
+                        "type": "string"
+                    },
+                    "orders": {
+                        "type": "string"
+                    },
+                    "refunds": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "order_id",
+                    "currency",
+                    "fulfillments",
+                    "orders",
+                    "refunds"
+                ],
+                "title": "OrderResource"
+            },
+            "ProductCollection": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/ProductResource"
+                        }
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "title": "ProductCollection"
+            },
+            "ProductResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "sqid": {
+                        "type": "string"
+                    },
+                    "user_id": {
+                        "type": "string"
+                    },
+                    "brand_id": {
+                        "type": "string"
+                    },
+                    "translations": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "lowest_price_excluding_vat": {
+                        "type": "string"
+                    },
+                    "lowest_compare_at_price_excluding_vat": {
+                        "type": "string"
+                    },
+                    "tax_rate": {
+                        "type": "string"
+                    },
+                    "requires_shipping": {
+                        "type": "string"
+                    },
+                    "is_tracking_stock": {
+                        "type": "string"
+                    },
+                    "allow_backorder": {
+                        "type": "string"
+                    },
+                    "is_buyable": {
+                        "type": "string"
+                    },
+                    "uses_variants": {
+                        "type": "string"
+                    },
+                    "average_rating": {
+                        "type": "string"
+                    },
+                    "google_product_feed": {
+                        "type": "object",
+                        "properties": {
+                            "google_product_category_name": {
+                                "type": "string"
+                            },
+                            "google_product_category_id": {
+                                "type": "string"
+                            },
+                            "google_product_adult": {
+                                "type": "string"
+                            },
+                            "google_product_condition": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "google_product_category_name",
+                            "google_product_category_id",
+                            "google_product_adult",
+                            "google_product_condition"
+                        ]
+                    },
+                    "in_stock": {
+                        "type": "string"
+                    },
+                    "variants": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "uuid",
+                    "sqid",
+                    "user_id",
+                    "brand_id",
+                    "translations",
+                    "url",
+                    "status",
+                    "lowest_price_excluding_vat",
+                    "lowest_compare_at_price_excluding_vat",
+                    "tax_rate",
+                    "requires_shipping",
+                    "is_tracking_stock",
+                    "allow_backorder",
+                    "is_buyable",
+                    "uses_variants",
+                    "average_rating",
+                    "google_product_feed",
+                    "in_stock",
+                    "variants",
+                    "created_at",
+                    "updated_at"
+                ],
+                "title": "ProductResource"
+            },
+            "ProductStoreRequest": {
+                "type": "object",
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "sqid": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "user_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "brand_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "lowest_price_excluding_vat": {
+                        "type": "integer"
+                    },
+                    "tax_rate": {
+                        "type": "integer"
+                    },
+                    "requires_shipping": {
+                        "type": "boolean"
+                    },
+                    "is_tracking_stock": {
+                        "type": "boolean"
+                    },
+                    "allow_backorder": {
+                        "type": "boolean"
+                    },
+                    "is_buyable": {
+                        "type": "boolean"
+                    },
+                    "uses_variants": {
+                        "type": "boolean"
+                    },
+                    "lowest_compare_at_price_excluding_vat": {
+                        "type": "integer"
+                    },
+                    "google_product_category_name": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "google_product_category_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "google_product_adult": {
+                        "type": "boolean"
+                    },
+                    "google_product_condition": {
+                        "type": "string"
+                    },
+                    "average_rating": {
+                        "type": [
+                            "number",
+                            "null"
+                        ]
+                    },
+                    "frontend_path": {
+                        "type": "string"
+                    },
+                    "in_stock": {
+                        "type": "boolean"
+                    },
+                    "menuable_title": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "slug": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "inStock": {
+                        "type": "boolean"
+                    },
+                    "price_excluding_vat": {
+                        "type": "integer"
+                    },
+                    "registerMediaConversionsUsingModelInstance": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "uuid",
+                    "status",
+                    "lowest_price_excluding_vat",
+                    "tax_rate",
+                    "lowest_compare_at_price_excluding_vat",
+                    "google_product_condition",
+                    "frontend_path",
+                    "price_excluding_vat"
+                ],
+                "title": "ProductStoreRequest"
+            },
+            "ProductUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "sqid": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "user_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "brand_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "status": {
+                        "type": "string"
+                    },
+                    "lowest_price_excluding_vat": {
+                        "type": "integer"
+                    },
+                    "tax_rate": {
+                        "type": "integer"
+                    },
+                    "requires_shipping": {
+                        "type": "boolean"
+                    },
+                    "is_tracking_stock": {
+                        "type": "boolean"
+                    },
+                    "allow_backorder": {
+                        "type": "boolean"
+                    },
+                    "is_buyable": {
+                        "type": "boolean"
+                    },
+                    "uses_variants": {
+                        "type": "boolean"
+                    },
+                    "lowest_compare_at_price_excluding_vat": {
+                        "type": "integer"
+                    },
+                    "google_product_category_name": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "google_product_category_id": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "google_product_adult": {
+                        "type": "boolean"
+                    },
+                    "google_product_condition": {
+                        "type": "string"
+                    },
+                    "average_rating": {
+                        "type": [
+                            "number",
+                            "null"
+                        ]
+                    },
+                    "frontend_path": {
+                        "type": "string"
+                    },
+                    "in_stock": {
+                        "type": "boolean"
+                    },
+                    "menuable_title": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "slug": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "inStock": {
+                        "type": "boolean"
+                    },
+                    "price_excluding_vat": {
+                        "type": "integer"
+                    },
+                    "registerMediaConversionsUsingModelInstance": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "uuid",
+                    "status",
+                    "lowest_price_excluding_vat",
+                    "tax_rate",
+                    "lowest_compare_at_price_excluding_vat",
+                    "google_product_condition",
+                    "frontend_path",
+                    "price_excluding_vat"
+                ],
+                "title": "ProductUpdateRequest"
+            },
+            "VariantCollection": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/VariantResource"
+                        }
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "title": "VariantCollection"
+            },
+            "VariantResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "is_active": {
+                        "type": "string"
+                    },
+                    "product_id": {
+                        "type": "string"
+                    },
+                    "sku": {
+                        "type": "string"
+                    },
+                    "gtin": {
+                        "type": "string"
+                    },
+                    "is_master": {
+                        "type": "string"
+                    },
+                    "qty_in_stock": {
+                        "type": "string"
+                    },
+                    "width": {
+                        "type": "string"
+                    },
+                    "height": {
+                        "type": "string"
+                    },
+                    "length": {
+                        "type": "string"
+                    },
+                    "weight": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "uuid",
+                    "is_active",
+                    "product_id",
+                    "sku",
+                    "gtin",
+                    "is_master",
+                    "qty_in_stock",
+                    "width",
+                    "height",
+                    "length",
+                    "weight",
+                    "created_at",
+                    "updated_at"
+                ],
+                "title": "VariantResource"
+            },
+            "VariantStoreRequest": {
+                "type": "object",
+                "properties": {
+                    "product_id": {
+                        "type": "integer"
+                    },
+                    "is_active": {
+                        "type": "boolean"
+                    },
+                    "sku": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "gtin": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "qty_in_stock": {
+                        "type": "integer"
+                    },
+                    "width": {
+                        "type": "number"
+                    },
+                    "height": {
+                        "type": "number"
+                    },
+                    "length": {
+                        "type": "number"
+                    },
+                    "weight": {
+                        "type": "number"
+                    }
+                },
+                "required": [
+                    "product_id"
+                ],
+                "title": "VariantStoreRequest"
+            },
+            "VariantUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "is_active": {
+                        "type": "boolean"
+                    },
+                    "sku": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "gtin": {
+                        "type": "string",
+                        "maxLength": 255
+                    },
+                    "qty_in_stock": {
+                        "type": "integer"
+                    },
+                    "width": {
+                        "type": "number"
+                    },
+                    "height": {
+                        "type": "number"
+                    },
+                    "length": {
+                        "type": "number"
+                    },
+                    "weight": {
+                        "type": "number"
+                    }
+                },
+                "title": "VariantUpdateRequest"
+            },
+            "WebhookCollection": {
+                "type": "object",
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/WebhookResource"
+                        }
+                    }
+                },
+                "required": [
+                    "data"
+                ],
+                "title": "WebhookCollection"
+            },
+            "WebhookResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "topics": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "id",
+                    "email",
+                    "url",
+                    "topics",
+                    "created_at",
+                    "updated_at"
+                ],
+                "title": "WebhookResource"
+            },
+            "WebhookStoreRequest": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "format": "email",
+                        "maxLength": 254
+                    },
+                    "url": {
+                        "type": "string"
+                    },
+                    "topics": {
+                        "type": "array",
+                        "enum": [
+                            "order_created",
+                            "order_fulfilment_created",
+                            "order_refund_created"
+                        ],
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "required": [
+                    "email",
+                    "url",
+                    "topics"
+                ],
+                "title": "WebhookStoreRequest"
+            }
         },
         "responses": {
-          "200": {
-            "description": "plant response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Plant"
+            "AuthenticationException": {
+                "description": "Unauthenticated",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Error overview."
+                                }
+                            },
+                            "required": [
+                                "message"
+                            ]
+                        }
+                    }
                 }
-              }
-            }
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+            },
+            "AuthorizationException": {
+                "description": "Authorization error",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Error overview."
+                                }
+                            },
+                            "required": [
+                                "message"
+                            ]
+                        }
+                    }
                 }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/plants/{id}": {
-      "delete": {
-        "description": "Deletes a single plant based on the ID supplied",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of plant to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Plant deleted",
-            "content": {}
-          },
-          "400": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
+            },
+            "ValidationException": {
+                "description": "Validation error",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Errors overview."
+                                },
+                                "errors": {
+                                    "type": "object",
+                                    "description": "A detailed description of each field that failed validation.",
+                                    "additionalProperties": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "message",
+                                "errors"
+                            ]
+                        }
+                    }
                 }
-              }
+            },
+            "ModelNotFoundException": {
+                "description": "Not found",
+                "content": {
+                    "application\/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Error overview."
+                                }
+                            },
+                            "required": [
+                                "message"
+                            ]
+                        }
+                    }
+                }
             }
-          }
         }
-      }
     }
-  },
-  "webhooks": {
-    "/plant/webhook": {
-      "post": {
-        "description": "Information about a new plant added to the store",
-        "requestBody": {
-          "description": "Plant added to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewPlant"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Return a 200 status to indicate that the data was received successfully"
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Plant": {
-        "required": [
-          "name"
-        ],
-        "type": "object",
-        "properties": {
-          "name": {
-            "description": "The name of the plant",
-            "type": "string"
-          },
-          "tag": {
-            "description": "Tag to specify the type",
-            "type": "string"
-          }
-        }
-      },
-      "NewPlant": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/Plant"
-          },
-          {
-            "required": [
-              "id"
-            ],
-            "type": "object",
-            "properties": {
-              "id": {
-                "description": "Identification number of the plant",
-                "type": "integer",
-                "format": "int64"
-              }
-            }
-          }
-        ]
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
-        }
-      }
-    },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
-    }
-  }
 }
